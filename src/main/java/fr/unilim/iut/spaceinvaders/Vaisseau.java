@@ -9,7 +9,7 @@ public class Vaisseau {
 		this.y = y;
 	}
 
-	public boolean occuperLaPosition(int x2, int y2) {
-		return(this.x==x) && (this.y==y);
+	public boolean occupeLaPosition(int x2, int y2) {
+		return(this.x==x2) && (this.y==y2);
 	}
 }

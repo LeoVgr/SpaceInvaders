@@ -12,21 +12,23 @@ public class SpaceInvaders {
 	
 	@Override
 	public String toString() {
-		
 		StringBuilder espaceDeJeu = new StringBuilder();
-		for (int y =0; y<hauteur;y++) {
-			for(int x =0;x<longueur; x++) {
-				if (vaisseau.occuperLaPosition(x,y)){
+		for (int y = 0; y < hauteur; y++) {
+			for (int x = 0; x < longueur; x++) {
+				if (this.aUnVaisseau() && vaisseau.occupeLaPosition(x, y))
 					espaceDeJeu.append('V');
-				}else {
+				else
 					espaceDeJeu.append('.');
-				}
-				
 			}
 			espaceDeJeu.append('\n');
 		}
 		return espaceDeJeu.toString();
 	}
+
+	private boolean aUnVaisseau() {
+		return vaisseau!=null;
+	}
+	
 	public void positionnerUnNouveauVaisseau(int x, int y) {
 		this.vaisseau = new Vaisseau(x,y);
 		
