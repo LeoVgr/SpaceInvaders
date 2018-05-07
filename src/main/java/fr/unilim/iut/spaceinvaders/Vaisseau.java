@@ -12,5 +12,14 @@ public class Vaisseau {
 	public boolean occupeLaPosition(int x2, int y2) {
 		return(this.x==x2) && (this.y==y2);
 	}
+
+	public void seDeplacerVersLaDroite() {
+		this.x=this.x+1;
+		
+	}
+
+	public int abscisse() {
+		return this.x;
+	}
 }
 
