@@ -22,13 +22,13 @@ public class SpaceInvaders {
 
 	public String recupererEspaceJeuDansChaineASCII() {
 		StringBuilder espaceDeJeu = new StringBuilder();
-		
+
 
 		for (int y = 0; y < hauteur; y++) {
 			for (int x = 0; x < longueur; x++) {
-				
+
 				espaceDeJeu.append(recupererMarqueDeLaPosition(x, y));
-				
+
 
 			}
 			espaceDeJeu.append(MARQUE_FIN_LIGNE);
@@ -45,7 +45,7 @@ public class SpaceInvaders {
 		}
 		return marque;
 	}
-	
+
 	private boolean aUnVaisseauQuiOccupeLaPosition(int x, int y) {
 		return this.aUnVaisseau() && vaisseau.occupeLaPosition(y, x);
 	}
@@ -55,11 +55,19 @@ public class SpaceInvaders {
 	}
 
 	public void positionnerUnNouveauVaisseau(int x, int y) {
-		
-		if (x >= longueur) {
+
+		if (  !estDansEspaceJeu(x, y) ) {
 			throw new HorsEspaceJeuException("Vous êtes en dehors de l'espace jeu");
 		}
-		vaisseau = new Vaisseau(x, y);
+
+
+		vaisseau = new Vaisseau(x, y); 
 
 	}
+
+	private boolean estDansEspaceJeu(int x, int y) {
+		return ((x >= 0) && (x < longueur)) && ((y >= 0) && (y < hauteur));
+	}
+
+
 }
