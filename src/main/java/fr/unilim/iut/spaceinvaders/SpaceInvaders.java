@@ -12,6 +12,7 @@ public class SpaceInvaders {
 	
 	@Override
 	public String toString() {
+		
 		StringBuilder espaceDeJeu = new StringBuilder();
 		for (int y = 0; y < hauteur; y++) {
 			for (int x = 0; x < longueur; x++) {

@@ -13,3 +13,4 @@ public class Vaisseau {
 		return(this.x==x2) && (this.y==y2);
 	}
 }
+
