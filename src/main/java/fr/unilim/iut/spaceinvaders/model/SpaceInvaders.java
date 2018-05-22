@@ -1,10 +1,13 @@
 package fr.unilim.iut.spaceinvaders.model;
 
+import fr.unilim.iut.spaceinvaders.moteurjeu.Commande;
+import fr.unilim.iut.spaceinvaders.moteurjeu.Jeu;
 import fr.unilim.iut.spaceinvaders.utils.DebordementEspaceJeuException;
 import fr.unilim.iut.spaceinvaders.utils.HorsEspaceJeuException;
+import fr.unilim.spaceinvaders.Constante;
 
-public class SpaceInvaders {
-	private static final int ORIGINE_ABSCISSE_TERRAIN = 0;
+public class SpaceInvaders implements Jeu {
+
 	private static final char MARQUE_FIN_LIGNE = '\n';
 	private static final char MARQUE_VIDE = '.';
 	private static final char MARQUE_VAISSEAU = 'V';
@@ -12,22 +15,22 @@ public class SpaceInvaders {
 	int hauteur;
 	Vaisseau vaisseau;
 
-	public SpaceInvaders(int longeur, int hauteur) {
-		this.longueur = longeur;
+	public SpaceInvaders(int longueur, int hauteur) {
+		this.longueur = longueur;
 		this.hauteur = hauteur;
 	}
 
+	public void initialiserJeu() {
+		Position positionVaisseau = new Position(this.longueur/2,this.hauteur-1);
+		Dimension dimensionVaisseau = new Dimension(Constante.VAISSEAU_LONGUEUR, Constante.VAISSEAU_HAUTEUR);
+		positionnerUnNouveauVaisseau(dimensionVaisseau, positionVaisseau);
+	}
 
 	public String recupererEspaceJeuDansChaineASCII() {
 		StringBuilder espaceDeJeu = new StringBuilder();
-
-
 		for (int y = 0; y < hauteur; y++) {
 			for (int x = 0; x < longueur; x++) {
-
 				espaceDeJeu.append(recupererMarqueDeLaPosition(x, y));
-
-
 			}
 			espaceDeJeu.append(MARQUE_FIN_LIGNE);
 		}
@@ -36,20 +39,41 @@ public class SpaceInvaders {
 
 	private char recupererMarqueDeLaPosition(int x, int y) {
 		char marque;
-		if (this.aUnVaisseauQuiOccupeLaPosition(y, x)) {
+		if (this.aUnVaisseauQuiOccupeLaPosition(x, y))
 			marque = MARQUE_VAISSEAU;
-		}else {
+		else
 			marque = MARQUE_VIDE;
-		}
 		return marque;
 	}
 
 	private boolean aUnVaisseauQuiOccupeLaPosition(int x, int y) {
-		return this.aUnVaisseau() && vaisseau.occupeLaPosition(y, x);
+		return this.aUnVaisseau() && vaisseau.occupeLaPosition(x, y);
 	}
 
-	private boolean aUnVaisseau() {
-		return vaisseau!=null;
+	public boolean aUnVaisseau() {
+		return vaisseau != null;
+	}
+
+	public void positionnerUnNouveauVaisseau(Dimension dimension, Position position) {
+
+		int x = position.abscisse();
+		int y = position.ordonnee();
+
+		if (!estDansEspaceJeu(x, y))
+			throw new HorsEspaceJeuException("La position du vaisseau est en dehors de l'espace jeu");
+
+		int longueurVaisseau = dimension.longueur(); 
+		int hauteurVaisseau = dimension.hauteur();
+
+		if (!estDansEspaceJeu(x + longueurVaisseau - 1, y))
+			throw new DebordementEspaceJeuException(
+					"Le vaisseau déborde de l'espace jeu vers la droite à cause de sa longueur");
+		if (!estDansEspaceJeu(x, y - hauteurVaisseau + 1))
+			throw new DebordementEspaceJeuException(
+					"Le vaisseau déborde de l'espace jeu vers le bas à cause de sa hauteur");
+
+		vaisseau = new Vaisseau(longueurVaisseau, hauteurVaisseau);
+		vaisseau.positionner(x, y);
 	}
 
 	private boolean estDansEspaceJeu(int x, int y) {
@@ -61,30 +85,32 @@ public class SpaceInvaders {
 			vaisseau.seDeplacerVersLaDroite();
 	}
 
-		
 	public void deplacerVaisseauVersLaGauche() {
-		if(vaisseau.abscisseLaPlusAGauche()>ORIGINE_ABSCISSE_TERRAIN) {
+		if (0 < vaisseau.abscisseLaPlusAGauche())
 			vaisseau.seDeplacerVersLaGauche();
-		}
+
 	}
+
+	public Vaisseau recupererVaisseau() {
+		return this.vaisseau;
+	}
+
 	
+	public void evoluer(Commande commandeUser) {
 
-	public void positionnerUnNouveauVaisseau(Dimension dimension, Position position) {
-		int x = position.abscisse();
-		int y = position.ordonnee();
-		if (!estDansEspaceJeu(x, y))
-			throw new HorsEspaceJeuException("La position du vaisseau est en dehors de l'espace jeu");
-
-		int longueurVaisseau = dimension.longueur();
-		int hauteurVaisseau = dimension.hauteur();
-			if (!estDansEspaceJeu(x + longueurVaisseau - 1, y))
-				throw new DebordementEspaceJeuException("Le vaisseau déborde de l'espace jeu vers la droite à cause de sa longueur");
-			if (!estDansEspaceJeu(x, y - hauteurVaisseau + 1))
-				throw new DebordementEspaceJeuException("Le vaisseau déborde de l'espace jeu vers le bas à cause de sa hauteur");
-
-		vaisseau = new Vaisseau(longueurVaisseau, hauteurVaisseau);
-		vaisseau.positionner(x, y);
-
+		if (commandeUser.gauche) {
+			deplacerVaisseauVersLaGauche();
 		}
+
+		if (commandeUser.droite) {
+			deplacerVaisseauVersLaDroite();
+		}
+
+	}
+
+	public boolean etreFini() {
+		return false;
+
+	}
 
 }
