@@ -1,5 +1,11 @@
 package fr.unilim.iut.spaceinvaders.moteurjeu;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 
@@ -33,6 +39,16 @@ public class InterfaceGraphique  {
 		//creation JFrame
 		JFrame f=new JFrame();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		URL resource = this.getClass().getResource("/icone.png");
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        f.setIconImage(image);
+        
 		
 		// creation panel
 		this.panel=new PanelDessin(x, y,afficheurUtil);
