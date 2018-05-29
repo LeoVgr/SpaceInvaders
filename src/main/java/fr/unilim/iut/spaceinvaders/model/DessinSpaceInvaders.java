@@ -18,11 +18,26 @@ public class DessinSpaceInvaders implements DessinJeu {
 		if (this.jeu.aUnVaisseau()) {
 			Vaisseau vaisseau = this.jeu.recupererVaisseau();
 			this.dessinerUnVaisseau(vaisseau, im);
+			
 		}
 		if(this.jeu.aUnMissile()) {
 			Missile missile = this.jeu.recupererMissile();
 			this.dessinerUnMissile(missile,im);
 		}
+		if(this.jeu.aUnEnvahisseur()) {
+			Envahisseur envahisseur = this.jeu.recupererEnvahisseur();
+			this.dessinerUnEnvahisseur(envahisseur,im);
+			
+		}
+		
+	}
+
+	private void dessinerUnEnvahisseur(Envahisseur envahisseur, BufferedImage im) {
+		Graphics2D crayon = (Graphics2D) im.getGraphics();
+		
+		crayon.setColor(Color.green);
+		crayon.fillRect(envahisseur.abscisseLaPlusAGauche(), envahisseur.ordonneeLaPlusBasse(), envahisseur.longueur(),
+				envahisseur.hauteur());
 		
 	}
 
