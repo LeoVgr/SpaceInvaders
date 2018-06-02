@@ -1,6 +1,6 @@
 package fr.unilim.iut.spaceinvaders.model;
 
-public abstract class Sprite {
+public class Sprite {
 
 	public Sprite( Dimension dimension,Position origine, int vitesse) {
 		super();
