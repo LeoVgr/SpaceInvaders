@@ -186,12 +186,20 @@ public class SpaceInvaders implements Jeu {
 				if(new Collision(this.envahisseur,this.missile).detecterCollision()) {
 					this.missile=null;
 					this.envahisseur=null;
+					this.terminerPartie();
 				}
 			}
 		}
 		
 		
 
+	}
+
+
+
+	private void terminerPartie() {
+		System.out.println("fin");
+		
 	}
 
 
@@ -232,6 +240,8 @@ public class SpaceInvaders implements Jeu {
 
 				envahisseur.positionner(longueur-((envahisseur.abscisseLaPlusADroite()+1-longueur)*2), envahisseur.ordonneeLaPlusHaute());
 				envahisseur.changerDeplacement();
+				
+
 			}
 		}else {
 			this.deplacerEnvahisseurVersLaGauche();

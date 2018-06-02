@@ -24,8 +24,11 @@ public class Collision {
 			estEnCollisionY=true;
 		}
 		if(estEnCollisionX && estEnCollisionY) {
+		
 			return true;
+			
 		}else {
+		
 			return false;
 		}
 		
