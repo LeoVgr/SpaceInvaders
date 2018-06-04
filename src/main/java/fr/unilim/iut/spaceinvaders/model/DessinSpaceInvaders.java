@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import fr.unilim.iut.spaceinvaders.moteurjeu.DessinJeu;
+import fr.unilim.spaceinvaders.Constante;
 
 public class DessinSpaceInvaders implements DessinJeu {
 
@@ -29,6 +30,17 @@ public class DessinSpaceInvaders implements DessinJeu {
 			this.dessinerUnEnvahisseur(envahisseur,im);
 			
 		}
+		if(this.jeu.retourneEstTermine()) {
+			this.dessinerFinJeu(im);
+		}
+		
+	}
+
+	private void dessinerFinJeu(BufferedImage im) {
+		Graphics2D crayon = (Graphics2D) im.getGraphics();
+		
+		crayon.setColor(Color.red);
+		crayon.drawString("FIN", Constante.ESPACEJEU_LONGUEUR/2, Constante.ESPACEJEU_HAUTEUR/2);
 		
 	}
 

@@ -40,14 +40,14 @@ public class InterfaceGraphique  {
 		JFrame f=new JFrame();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		/*URL resource = this.getClass().getResource("/icone.png");
+		URL resource = this.getClass().getResource("/icone.png");
         BufferedImage image = null;
         try {
             image = ImageIO.read(resource);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        f.setIconImage(image);*/
+        f.setIconImage(image);
         
 		
 		// creation panel
